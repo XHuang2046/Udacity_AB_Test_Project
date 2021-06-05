@@ -56,8 +56,7 @@ Note: Any place "unique cookies" are mentioned, the uniqueness is determined by 
 ### Metric Variability 
 Now, we need to check the variability of a metric to later determine the experiment sample size and to analyze confidence intervals and draw conclusions. The more variant a metric is, the larger the experiment size required and the harder to reach a significant result, so a good evaluation metric should have a small variance. We usually use standard deviation to describe the variance, since all the evaluation metrics are probability, we assume they are all binomial distributed so the standard deviation could be calculated by the formula:
 
-<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large SD = \sqrt{p*(1-p)\over N}" style="border:none;">
-
+SD = sqrt(p*(1-p)/N)  
 p - baseline probability of the event to occur  
 N - sample size
 
@@ -78,9 +77,23 @@ The standard error of each evaluation metric is shown in table below:
 The analytical estimation of variance is good enough only when the **unit of diversion** of the experiment is equal to the **unit of analysis** (the denominator of the metric formula). In the case of Gross Conversion and Net Conversion, both units of diversion and analysis are cookies, so the analytical variances we calculated are reliable. However, the unit of analysis of Retention is user-id meanwhile the unit of diversion is cookie. In this case, the actual variance might be different from the analytical estimation and we need to estimate it empirically.
 
 ### Experiment Size 
-Now we need to determine the experiment sample size. In statistics, the formula to calculate the minimum sample size is,
+Now we need to determine the experiment sample size. It could be calculated by either python or online calculator [Evan Miller](https://www.evanmiller.org/ab-testing/sample-size.html) 
 
-<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large n = \frac{\sigma^2}{dmin^2}(Z_{1-\frac{\alpha}{2}} Z_ {1-\beta})^2}" style="border:none;">
+[Evan Miller](https://www.evanmiller.org/ab-testing/sample-size.html) 
+
+The standard deviation is shown below:
+
+
+| Metric|Baseline Value|Sampled Value|SD|dmin|Experiment Size （Cal. by python）|Experiment Size （Cal. by Evan's calculator）
+| --- | ----------- |----------- |----------- |----- |----- |----- |
+| Number of Cookies | 40000| 5000|  |3000
+| Number of Clicks | 3200 | 400| |50
+| CTP | 0.08| NA| |0.01
+| Gross Conversion | 0.20625| NA |0.0202|0.01|645868|645875
+| Retention|0.53| NA |0.0549|0.01|4737771|4741213
+| Net Conversion |0.1093125| NA |0.0156 |0.0075|685334|685325
+
+
 
 
 
