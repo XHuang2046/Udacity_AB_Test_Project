@@ -79,10 +79,7 @@ The analytical estimation of variance is good enough only when the **unit of div
 ### Experiment Size 
 Now we need to determine the experiment sample size. It could be calculated by either python or online calculator [Evan Miller](https://www.evanmiller.org/ab-testing/sample-size.html) 
 
-[Evan Miller](https://www.evanmiller.org/ab-testing/sample-size.html) 
-
 The standard deviation is shown below:
-
 
 | Metric|Baseline Value|Sampled Value|SD|dmin|Experiment Size （Cal. by python）|Experiment Size （Cal. by Evan's calculator）
 | --- | ----------- |----------- |----------- |----- |----- |----- |
