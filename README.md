@@ -33,6 +33,7 @@ For each metric, Udacity provides a minimum change (Dmin) which is practically s
 | Number of Cookies | # Unique cookies to view the course overview page per day|C| 3000|
 | Number of Clicks | # Unique cookies to click "Start free trial" per day | CL | 240|
 | Click-through-probability | CL/C |CTP |0.01|
+
 These three metrics related to data collected before the screener showing up, so we expect these metrics not to vary between experiment group and control group.
 
 **Evaluate Metrics**
@@ -45,13 +46,41 @@ Net Conversion|# use-ids paid after free trial / CL| NCV|0.0075|
 Note: Any place "unique cookies" are mentioned, the uniqueness is determined by day. (That is, the same cookie visiting on different days would be counted twice.) 
 
 **Reason to choose/ not choose the metrics:**
-- Gross Conversion: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. Since the hypothesis is that the screener reduces the number of frustrated students who left the free trial because they don’t have enough time, which is equivalent to the assumption of that the student without enough time will not enroll free trial, so we would expect the GCVExperiment  is lower than GCVControl .
+- Gross Conversion: That is, number of user-ids to complete checkout and enroll in the free trial divided by number of unique cookies to click the "Start free trial" button. Since the hypothesis is that the screener reduces the number of frustrated students who left the free trial because they don’t have enough time, which is equivalent to the assumption of that the student without enough time will not enroll free trial, so we would expect the GCVExperiment  is lower than GCVControl.
+
 - Retention: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by number of user-ids to complete checkout. Again, our hypothesis is that the number of frustrated students who left the free trial will decrease because of the screener, so we would expect that retention in the experiment group is higher than in the control group.
+
 - Net Conversion: That is, number of user-ids to remain enrolled past the 14-day boundary (and thus make at least one payment) divided by the number of unique cookies to click the "Start free trial" button. The hypothesis states that the screener will not significantly reduce the number of students to continue past the free trial and eventually complete the course, so we expect to see this metric not to vary between two groups.
 - Number of user-ids/ Number of enrollments: That is, number of users who enroll in the free trial. We expect to see a decrease in the number of enrollments,  however, this metric is not normalized and it provides equivalent information to the Gross Conversion, so we will not choose this metric to evaluate.
 
 ### Metric Variability 
 Now, we need to check the variability of a metric to later determine the experiment sample size and to analyze confidence intervals and draw conclusions. The more variant a metric is, the larger the experiment size required and the harder to reach a significant result, so a good evaluation metric should have a small variance. We usually use standard deviation to describe the variance, since all the evaluation metrics are probability, we assume they are all binomial distributed so the standard deviation could be calculated by the formula:
+
+<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large SD = \sqrt{p*(1-p)\over N}" style="border:none;">
+
+p - baseline probability of the event to occur  
+N - sample size
+
+
+Assuming a sample size of 5,000 cookies visiting the course overview page per day (given by Udacity) - we want to estimate a standard deviation for the evaluation metrics. 
+The standard error of each evaluation metric is shown in table below:
+
+| Metric | Description |Baseline Value|Sampled Value|SD|
+| --- | ----------- |----------- |----------- |----------- |
+| Number of Cookies | Unique cookies to view course overview page per day | 40000| 5000|
+| Number of Clicks | Unique cookies to click "Start free trial" per day | 3200 | 400|
+| Number of Enrollments | Enrollments per day | 660|82.5|
+| CTP | Click-through-probability on "Start free trial"|0.08| NA|
+| Gross Conversion | Probability of enrolling, given click|0.20625| NA |0.0202
+| Retention | Probability of payment, given enroll |0.53| NA |0.0549
+| Net Conversion | Probability of payment, given click |0.1093125| NA |0.0156  
+
+The analytical estimation of variance is good enough only when the **unit of diversion** of the experiment is equal to the **unit of analysis** (the denominator of the metric formula). In the case of Gross Conversion and Net Conversion, both units of diversion and analysis are cookies, so the analytical variances we calculated are reliable. However, the unit of analysis of Retention is user-id meanwhile the unit of diversion is cookie. In this case, the actual variance might be different from the analytical estimation and we need to estimate it empirically.
+
+### Experiment Size 
+Now we need to determine the experiment sample size. In statistics, the formula to calculate the minimum sample size is,
+
+<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large n = \frac{\sigma^2}{dmin^2}(Z_{1-\frac{\alpha}{2}} Z_ {1-\beta})^2}" style="border:none;">
 
 
 
