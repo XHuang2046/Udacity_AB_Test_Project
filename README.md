@@ -91,6 +91,62 @@ The standard deviation is shown below:
 | Net Conversion |0.1093125| NA |0.0156 |0.0075|685334|685325
 
 
+### Experiment Duration
+The experiment size for Retention is more than 4 million, which means that the experiment will last 119 days even If we divert 100% of traffic to the experiment. This 4-month duration appears to be too risky for Udacity. First, we cannot run any other experiment simultaneously. Secondly, if the treatment jeopardizes the user experience and decreases conversion rates, Udacity has to afford the economic cost, which is a business risk. Consequently, it’s reasonable to abandon Retention and keep working with Gross Conversion and Net Conversion. This reduces the number of required pageviews to 685,334.
+Given 40,000 pageviews per day as baseline, the experiment would take:
+
+| % of Traffic|Experiment Duration (days)
+| --- | ----------- |
+| 100 | 18|
+|75|23
+|50|35
+
+If we explore the syllabus for Udacity’s courses, many courses are scheduled in 4-5 weeks to be completed, so a 35-day experiment might be a good choice, and meanwhile it’s relatively safer to divert only half of traffic to experiment.
+
+## Experiment Analysis
+### Sanity Checks
+
+Before we really perform complicated analysis on results, we need to do the sanity checks to verify the experiment conducted as expected and the data collected correctly.
+
+We have 3 Invariant Metrics:
+
+1. Number of Cookies in Course Overview Page
+2. Number of Clicks on Free Trial Button
+3. Free Trial button Click-Through-Probability  
+ 
+And we expect to see that these metrics not to vary between control group and experiment group, to be more precise, we need to verify there's no significant difference between metrics in two groups.
+
+
+| |Expected Value|Observed Value|CI_left|CI_right| Pass
+| ---- |--- | ---|----|---- |---- |
+Cookies| 	0.5| 0.4994| 0.4988| 0.5012	| Yes
+Clicks	| 0.5| 0.4995| 0.4959| 0.5041| Yes
+CTP	| 0| 	0.0001| -0.0013| 0.0013| Yes
+
+### Effect Size Test
+Similar to the click-through probability, we can test our evaluation metric hypotheses using two proportion z-test (thereby, the same assumptions as outlined above apply). Further, we will check if the changes are also practically significant (if larger than dmin)
+
+| |difference|CI_left|CI_right|dmin|Statistically significant|Practically significant|
+| ---- |--- | ---|----|---- |---- |--- |
+Gross Conversion| -0.0206|-0.0291|-0.012|0.0100|Yes|Yes
+Net Conversion	| -0.0049|-0.0116|0.0019|0.0075|No|	No
+
+### Double check with Sign Tests
+In a sign test we get another perspective at analyzing the results we got - we check if the trend of change we observed (increase or decrease) was evident in the daily data. We are going to compute the metric's value per day, then count on how many days the metric was lower in the experiment group and this will be the number of success for our binomial variable. Once this is defined we can look at the proportion of days of success out of all the available days.
+
+
+| |P Value for sign test|Statistically Significant with alpha = 0.05|
+| ---- |--- | ---|
+Gross Conversion| 0.0026|Yes
+Net Conversion	| 0.6776|No
+
+Sign test results match the effect size calculation.
+
+### Summary
+
+Since the two evaluation metrics are not independent from each other so Bonferroni correction is not adopted here, otherwise the results too conservative.
+
+The observed gross conversion in the experiment group is around 2.06% smaller than which observed in the control group. As number of clicks remaining unchanged, the number of students enrolling in the free trial decreased as we expected. Meanwhile, the net conversion didn't vary significantly between two groups which corresponds to our hypothesis - the screener doesn't significantly reduce the number of students to continue past the free trial. However, the results are less compatible with the assumption that the decrease in gross conversion is entirely absorbed by an improvement in the overall student experience. And from a profit perspective, this treatment doesn't increase the revenue, consequently, I recommend not to launch the screener at this time. Some follow-up experiments, for example, if student overall experience is really improved with less frustrated students left during free-trial period, are required. 
 
 
 
