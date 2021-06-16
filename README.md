@@ -146,7 +146,22 @@ Sign test results match the effect size calculation.
 
 Since the two evaluation metrics are not independent from each other so Bonferroni correction is not adopted here, otherwise the results too conservative.
 
-The observed gross conversion in the experiment group is around 2.06% smaller than which observed in the control group. As number of clicks remaining unchanged, the number of students enrolling in the free trial decreased as we expected. Meanwhile, the net conversion didn't vary significantly between two groups which corresponds to our hypothesis - the screener doesn't significantly reduce the number of students to continue past the free trial. However, the results are less compatible with the assumption that the decrease in gross conversion is entirely absorbed by an improvement in the overall student experience. And from a profit perspective, this treatment doesn't increase the revenue, consequently, I recommend not to launch the screener at this time. Some follow-up experiments, for example, if student overall experience is really improved with less frustrated students left during free-trial period, are required. 
+The observed gross conversion in the experiment group is around 2.06% smaller than which observed in the control group. As number of clicks remaining unchanged, the number of students enrolling in the free trial decreased as we expected. Meanwhile, the net conversion didn't vary significantly between two groups which corresponds to our hypothesis - the screener doesn't significantly reduce the number of students to continue past the free trial. However, the results are less compatible with the assumption that the decrease in gross conversion is entirely absorbed by an improvement in the overall student experience. And from a profit perspective, this treatment doesn't increase the revenue, consequently, I recommend not to launch the screener at this time. 
+
+### Suggestions to the Follow-up Experiment.
+
+The previous hypothesis mentioned that new feature could probably help improve the overall student experience and improve coaches' capacity to support students who are likely to complete the course, however, we don't have any metrics to meaure them. So in the follow-up experiment, we could characterize some metrics to this objective, for example, the optional survey for students when they complete each lesson and the mandaroty survey for coaches.
+
+The experiment size required for tracking retention is too large, so we could charaterize other metrics replacing it. Such as 7-day student churn, 28-days student churn and 45-days student churn.
+
+Re-run the experiment with tracking extra metrics, weekly revenue, the results of survey and student churn (7, 28, 45 days respectively), but decrease the percentage of traffic diverted to the experiment (eg. 25%), then extend experiment duration to 2 months with constantly tracking the weekly revenue for avoiding business risk. If the decline in revenue turns to be out of the certain threshold value, then stop the experiment immediatly for stop-loss. 
+
+Hypothesis: 
+1. the gross conversion rate will decrease (the screener will reduce the number of students who don't have enough time)
+2. the 7-days student churn will decrease.
+3. the 28-days and 45-days student churn will not increase.
+4. net conversion will not decrease
+5. Survey results will give a positive feedback (students feel better, coaches are able to provide more and useful guidence). 
 
 
 
